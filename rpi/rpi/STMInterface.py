@@ -80,17 +80,18 @@ class STM:
             print('[STM-WRITE Error] %s' % str(e))
             raise e
         
-    def write_to_STM_test(message):
-        try:
-
-            print('In STM: write to STM method: before Transmitted to STM:')
-            print('\t %s' % message)
-            print(message.decode()+" sent")
-            print('In STM: write to STM method: after Transmitted to STM')
-
-        except Exception as e:
-            print('[STM-WRITE Error] %s' % str(e))
-            raise e
+    def move(self, instr):
+        # for instr in instr_list:
+        self.write_to_STM(instr.encode())
+        while True:
+            raw_dat = self.STM_connection.read(1)
+            dat = raw_dat.strip().decode()
+            # print(raw_dat)
+            if dat == 'R':
+                break
+                # reply = str(dat.decode())
+                # return reply
+                # break
 
 
 if __name__ == '__main__':
